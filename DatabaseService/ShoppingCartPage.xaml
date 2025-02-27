@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DatabaseService.ShoppingCartPage"
+             Title="ShoppingCartPage">
+
+    <Grid RowDefinitions="*, Auto">
+        <!-- Shopping cart list -->
+        <ListView x:Name="shoppingCartListView" Grid.Row="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10" ColumnDefinitions="*, Auto, Auto, Auto">
+                            <StackLayout Grid.Column="0">
+                                <Label Text="{Binding ItemName}" FontSize="18" FontAttributes="Bold"/>
+                                <Label Text="{Binding FormattedPrice}" TextColor="#007F00"/>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                <Label Text="{Binding Quantity, StringFormat='Qty: {0}'}" FontSize="16"/>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="10,0,0,0">
+                                <Label Text="{Binding FormattedTotalPrice}" FontSize="16" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <Button Grid.Column="3" Text="Remove" 
+                                    Clicked="RemoveItemButton_Clicked"
+                                    BackgroundColor="#FF5555" 
+                                    TextColor="White"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    Margin="10,0,0,0"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <StackLayout Padding="10" IsVisible="{Binding Source={x:Reference shoppingCartListView}, Path=ItemsSource.Count, Converter={StaticResource CountToVisibilityConverter}}">
+                    <Label Text="Your cart is empty" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Text="Add items from the shopping list" FontSize="14" HorizontalOptions="Center"/>
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
+
+        <!-- Checkout button area -->
+        <Grid Grid.Row="1" ColumnDefinitions="*, *" Padding="10" BackgroundColor="#f0f0f0">
+            <Button Grid.Column="0" Text="Clear Cart" 
+                    Clicked="ClearCartButton_Clicked"
+                    BackgroundColor="#999999" 
+                    TextColor="White"
+                    Margin="0,0,5,0"/>
+
+            <Button Grid.Column="1" Text="Checkout" 
+                    Clicked="CheckoutButton_Clicked"
+                    BackgroundColor="#007F00" 
+                    TextColor="White"
+                    Margin="5,0,0,0"/>
+        </Grid>
+    </Grid>
+</ContentPage>
